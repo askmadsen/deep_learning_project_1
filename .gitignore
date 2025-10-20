@@ -1,1 +1,3 @@
 *catdog_data*
+__pycache__/
+*.pyc
