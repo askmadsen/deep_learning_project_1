@@ -19,10 +19,7 @@ class CatDogDataset(Dataset):
     def __len__(self) -> int:
         return self.length
 
-    def __getitem__(self, idx):
-        if torch.is_tensor(idx):
-            idx = idx.tolist()
-        
+    def __getitem__(self, idx: int):
         if idx < len(self.dog_files):
             img_path = self.dog_files[idx]
             label = 0  # Dog

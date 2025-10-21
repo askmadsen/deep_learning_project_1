@@ -12,7 +12,7 @@ MODEL_PATH = "models/cat_dog_model.pth"
 
 
 
-def test_model(model: nn.Module, test_loader: torch.utils.data.DataLoader, criterion: nn.Module, device: torch.device) -> float:
+def test_model(model: nn.Module, test_loader: torch.utils.data.DataLoader, criterion: nn.Module, device: torch.device) -> tuple[float, float]:
     model.eval()
     model.to(device)
 
@@ -60,17 +60,21 @@ def predict(model: nn.Module, image_path: str, transform: transforms.Compose, de
 
 if __name__ == "__main__":
     transformations = transforms.Compose([
-    transforms.Resize((128, 128)),
-    transforms.ToTensor(),
-    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-])
+        transforms.Resize((128, 128)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+    ])
 
     test_dataset = CatDogDataset(dogs_dir="catdog_data/test/dogs", cats_dir="catdog_data/test/cats", transform=transformations)
     test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=32, shuffle=False)
+
     classifier = CatDogClassifier()
     classifier.load_state_dict(torch.load(MODEL_PATH))
+    classifier.to(DEVICE)
     criterion = nn.CrossEntropyLoss()
+
     acc, loss = test_model(classifier, test_loader, criterion, DEVICE)
+    
     print(f"Test Accuracy: {acc:.2f}%, Test Loss: {loss:.4f}")
     predict(classifier, "catdog_data/test/cats/cat.1300.jpg", transformations, DEVICE)
 

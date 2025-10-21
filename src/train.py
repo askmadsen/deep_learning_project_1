@@ -7,14 +7,16 @@ from test import test_model
 from data_handler import save_data, plot_metrics
 
 EPOCHS = 100
-LEARNING_RATE = 0.0001
+LEARNING_RATE = 0.001
 BATCH_SIZE = 32
 MOMENTUM = 0.9
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 LOSS_FN = torch.nn.CrossEntropyLoss()
-MODEL_PATH = "models/cat_dog_model.pth"
-DATA_PATH = "training_metrics.json"
-IMAGE_PATH = "training_metrics.png"
+
+ID = "1"
+MODEL_PATH = f"models/cat_dog_model_{ID}.pth"
+DATA_PATH = f"training_metrics_{ID}.json"
+IMAGE_PATH = f"training_metrics_{ID}.png"
 
 
 def train_model(model: torch.nn.Module, train_loader: DataLoader, criterion, optimizer, device: torch.device):
@@ -51,20 +53,22 @@ def train_model(model: torch.nn.Module, train_loader: DataLoader, criterion, opt
     
 
 
-
-
 if __name__ == "__main__":
     transformations_train = transforms.Compose([
-    transforms.Resize((128, 128)),
-    transforms.RandomRotation((-90, 90)),
-    transforms.ToTensor(),
-    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-])  
+        transforms.Resize((128, 128)),
+        transforms.RandomRotation((-90, 90)),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+        transforms.GaussianBlur(5),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+    ])  
     transformations_validation = transforms.Compose([
-    transforms.Resize((128, 128)),
-    transforms.ToTensor(),
-    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-])
+        transforms.Resize((128, 128)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+    ])
 
     train_dataset = CatDogDataset(dogs_dir="catdog_data/train/dogs", cats_dir="catdog_data/train/cats", transform=transformations_train)
     validation_dataset = CatDogDataset(dogs_dir="catdog_data/validation/dogs", cats_dir="catdog_data/validation/cats", transform=transformations_validation)
@@ -78,6 +82,7 @@ if __name__ == "__main__":
     train_losses = []
     validation_accuracies = []
     validation_losses = []
+
     for epoch in range(EPOCHS):
         train_acc, train_loss = train_model(classifier, train_dataloader, LOSS_FN, optimizer, DEVICE)
         val_acc, val_loss = test_model(classifier, validation_dataloader, LOSS_FN, DEVICE)
@@ -86,6 +91,7 @@ if __name__ == "__main__":
         validation_accuracies.append(val_acc)
         validation_losses.append(val_loss)
         print(f"Epoch [{epoch + 1}/{EPOCHS}], Train Loss: {train_loss:.4f}, Train Accuracy: {train_acc:.4f}, Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_acc:.4f}")
+
     save_data(DATA_PATH, {
         "train_acc": train_accuracies,
         "train_loss": train_losses,
