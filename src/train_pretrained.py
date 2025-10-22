@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision import models
-from train import train_model
+from train import run_epoch
 from cat_dog_dataset import CatDogDataset
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -80,14 +80,14 @@ if __name__ == "__main__":
         classifier = get_pretrained_model()
         optimizer = torch.optim.Adam(classifier.parameters(), lr=LEARNING_RATE, weight_decay=1e-4)
 
-        train_model(classifier, train_dataloader, LOSS_FN, optimizer, DEVICE)
+        run_epoch(classifier, train_dataloader, LOSS_FN, optimizer, DEVICE)
         train_accuracies = []
         train_losses = []
         validation_accuracies = []
         validation_losses = []
 
         for epoch in range(EPOCHS):
-            train_acc, train_loss = train_model(classifier, train_dataloader, LOSS_FN, optimizer, DEVICE)
+            train_acc, train_loss = run_epoch(classifier, train_dataloader, LOSS_FN, optimizer, DEVICE)
             val_acc, val_loss = test_model(classifier, validation_dataloader, LOSS_FN, DEVICE)
             train_accuracies.append(train_acc)
             train_losses.append(train_loss)
