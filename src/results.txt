@@ -11,9 +11,11 @@ Seed 9210: Train 88.17, Max Train: 88.90 Val 83.27, Max Val: 85.17, Test 83.75
 
 
 Best 3:
-Seed 6525: Train 89.53, Val 83.48, Test 87.75
-Seed 4609: Train 89.25, Val 82.97, Test 87.00
-Seed 1406: Train 88.62, Val 81.45, Test 86.00
+Seed 6525: Train 89.53, Max Train: 91.25 Val 83.48, Max Val: 86.17, Test 87.75
+Seed 4609: Train 89.25, Max Train: 90.85 Val 82.97, Max Val: 84.83, Test 87.00
+Seed 1406: Train 88.62, Max Train: 90.05 Val 81.45, Max Val: 84.50, Test 86.00
+
+
 
 Tune order:
 
