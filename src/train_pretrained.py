@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision import models
-from train import run_epoch
+from train import train_epoch
 from cat_dog_dataset import CatDogDataset
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -34,6 +34,8 @@ def get_pretrained_model() -> nn.Module:
         nn.Dropout(0.5),
         nn.Linear(1024, 2),
     )
+
+    print(vgg.features)
     return vgg
 
 def load_pretrained_model(model_path: str) -> nn.Module:
@@ -55,8 +57,8 @@ def load_pretrained_model(model_path: str) -> nn.Module:
 
 
 if __name__ == "__main__":
-
-    if TUNE:
+    get_pretrained_model()
+    """if TUNE:
         transformations_train = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomHorizontalFlip(),
@@ -110,3 +112,4 @@ if __name__ == "__main__":
         
         print(f"Test Accuracy: {acc:.2f}%, Test Loss: {loss:.4f}")
         predict(classifier, "catdog_data/test/cats/cat.1300.jpg", transformations, DEVICE)
+"""

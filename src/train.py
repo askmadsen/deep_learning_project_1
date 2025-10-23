@@ -1,5 +1,6 @@
 from cat_dog_classifier import CatDogClassifier
 from cat_dog_classifier_good import CatDogClassifierGood
+from cat_dog_classifier_new import CatDogClassifierNew
 import torch
 import numpy as np
 import random
@@ -11,8 +12,8 @@ from config import VALIDATION_DATA as validation_dataset
 from config import MODEL_DIR, TRAINING_METRICS_DIR, TRAINING_METRIC_IMAGES_DIR
 
 
-EPOCHS = 20
-LEARNING_RATE = 0.0001
+EPOCHS = 50 
+LEARNING_RATE = 1e-3
 BATCH_SIZE = 32
 MOMENTUM = 0.9
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -74,13 +75,16 @@ def train_model(num_epochs: int,
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
         optimizer,
         mode='max',           # monitor val_acc
-        factor=0.9,           # smaller decay per trigger (more gentle)
-        patience=10,          # wait longer before decaying
-        threshold=0.005,      # only consider improvement significant if val_acc increases by >= 0.5%
-        threshold_mode='rel', # relative threshold
-        min_lr=1e-6,          # stop decaying too low
-        cooldown=2            # wait 2 epochs after a decay before monitoring again
+        factor=0.8,           # slightly stronger decay per trigger
+        patience=3,           # fewer epochs to wait before decaying
+        threshold=0.01,       # require at least 1% improvement in val_acc
+        threshold_mode='rel', # relative improvement
+        min_lr=1e-6,          # never go below this LR
+        cooldown=2            # wait 2 epochs after LR decay before monitoring
     )
+
+
+ 
 
     train_accuracies = []
     train_losses = []
@@ -125,14 +129,16 @@ def train_model(num_epochs: int,
         })
 
 if __name__ == "__main__":
+    #seeds = [42, 1054, 1406, 3772, 4609, 5168, 6525, 7214, 8263, 9210]
 
-    for seed in random.sample(range(5000,15000), 5):
-        
+    seeds = [6525, 4609, 1406]
+    for seed in seeds:
+        print(seed)
         set_seed(seed)
 
-        lock_features = True
+        lock_features = False
 
-        model = CatDogClassifierGood()
+        model = CatDogClassifierNew()
 
         if lock_features:
             for param in model.features.parameters():

@@ -6,7 +6,7 @@ class CatDogClassifierGood(nn.Module):
         super(CatDogClassifierGood, self).__init__()  # [batch_size, 3, 128, 128]
 
         self.features = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3, stride=1, padding=1),  # [batch_size, 32, 128, 128]
+            nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, stride=1, padding=1),  # [batch_size, 32, 128, 128]
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2, padding=0),  # [batch_size, 32, 64, 64]
 

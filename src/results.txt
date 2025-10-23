@@ -1,0 +1,18 @@
+Seed 42: Train 87.58, Max Train: 89.20 Val 82.47, Max Val: 83.50, Test 84.00
+Seed 1054: Train 89.40, Max Train: 91.00 Val 82.73, Max Val: 85.33, Test 85.75
+Seed 1406: Train 88.62, Max Train: 90.05 Val 81.45, Max Val: 84.50, Test 86.00
+Seed 3772: Train 88.84, Max Train: 90.30 Val 82.13, Max Val: 84.17, Test 83.50
+Seed 4609: Train 89.25, Max Train: 90.85 Val 82.97, Max Val: 84.83, Test 87.00
+Seed 5168: Train 89.27, Max Train: 90.95 Val 82.55, Max Val: 83.83, Test 78.00
+Seed 6525: Train 89.53, Max Train: 91.25 Val 83.48, Max Val: 86.17, Test 87.75
+Seed 7214: Train 87.70, Max Train: 88.60 Val 81.07, Max Val: 83.67, Test 82.75
+Seed 8263: Train 87.87, Max Train: 89.40 Val 81.47, Max Val: 83.67, Test 83.00
+Seed 9210: Train 88.17, Max Train: 88.90 Val 83.27, Max Val: 85.17, Test 83.75
+
+
+Best 3:
+Seed 6525: Train 89.53, Val 83.48, Test 87.75
+Seed 4609: Train 89.25, Val 82.97, Test 87.00
+Seed 1406: Train 88.62, Val 81.45, Test 86.00
+
+
