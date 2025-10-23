@@ -15,4 +15,25 @@ Seed 6525: Train 89.53, Val 83.48, Test 87.75
 Seed 4609: Train 89.25, Val 82.97, Test 87.00
 Seed 1406: Train 88.62, Val 81.45, Test 86.00
 
+Tune order:
+
+1. RandomResizedCrop 
+    (0.85, 1.0)
+	(0.8, 1.0)
+	(0.75, 1.0)
+	(0.7, 1.0)
+	(0.65, 1.0)
+
+2. RandomHorizontalFlip
+
+3. RandomRotation
+
+4. RandomAffine
+
+5. ColorJitter
+
+6. GaussianBlur
+
+7. RandomErasing
+
 

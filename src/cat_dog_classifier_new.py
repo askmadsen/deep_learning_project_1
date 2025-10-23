@@ -33,7 +33,7 @@ class CatDogClassifierNew(nn.Module):
         )
        
         self.avgpool = nn.AdaptiveAvgPool2d((2,2))
-        self.dropout = nn.Dropout(p=0.4)
+        self.dropout = nn.Dropout(p=0.35)
         self.relu = nn.ReLU()
         self.fc1 = nn.Linear(256 * 2 * 2, 256)
         self.fc2 = nn.Linear(256, 2)

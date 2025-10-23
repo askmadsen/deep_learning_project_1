@@ -7,7 +7,6 @@ class CustomTransformation:
     
     def get_train_transforms(self):
         transformations = self.other_transformations
-        #transformations.insert(0, transforms.Grayscale(num_output_channels=1))
         transformations.insert(0, transforms.RandomResizedCrop(self.image_size, scale=(0.8, 1.0)))
         transformations.append(transforms.ToTensor())
         transformations.append(transforms.Normalize((0.5,), (0.5,)))
